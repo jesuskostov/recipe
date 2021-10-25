@@ -7,24 +7,28 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      id: String,
-      name: String,
-      email: String
+      id: '',
+      name: '',
+      email: ''
     },
     ideas: [],
-    myIdeas: []
+    recipe: [],
+    ideaUsers: []
   },
   mutations: {
     SET_USER: (state, user) => {
-      state.user.id = user._id
+      state.user.id = user.id
       state.user.name = user.name
       state.user.email = user.email
     },
     SET_IDEAS: (state, payload) => {
       state.ideas = payload
     },
-    SET_MY_IDEAS: (state, payload) => {
-      state.myIdeas = payload
+    SET_RECIPE: (state, payload) => {
+      state.recipe = payload
+    },
+    SET_IDEA_USERS: (state, payload) => {
+      state.ideaUsers = payload
     }
   },
   actions: {
@@ -36,12 +40,18 @@ export default new Vuex.Store({
       let res = await axios.get('http://localhost:5000/ideas')
       commit('SET_IDEAS', res.data)
     },
-    getMyIdeas: async ({commit, state}) => {
-      let userID = state.user.id      
-      let res = await axios.get(`http://localhost:5000/ideas/${userID}`)
-      commit('SET_MY_IDEAS', res.data)
-      console.log(userID);
+    getRecipe: async ({commit}, id) => {
+      let res = await axios.get(`http://localhost:5000/ideas/${id}`)
+      commit('SET_RECIPE', res.data)
     },
+    applyToIdea: async ({dispatch}, {ideaID, user}) => {
+      await axios.put(`http://localhost:5000/applyIdea`, {ideaID, user})
+      dispatch('getIdeas')
+    },
+    usersInIdea: async ({commit}, userIDs) => {
+      let res = await axios.get(`http://localhost:5000/userInIdea/${userIDs}`)
+      commit('SET_IDEA_USERS', res.data)
+    }
   },
   modules: {
   }

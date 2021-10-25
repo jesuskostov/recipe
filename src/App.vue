@@ -1,33 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link v-if="show" to="/login">Login |</router-link> 
-      <router-link v-if="show" to="/register">Register |</router-link>
-      <router-link to="/">Home |</router-link>
-      <router-link to="/create-idea"> Create Idea |</router-link> 
-      <router-link v-if="!show" to="/my-ideas"> My Ideas</router-link> 
-    </div>
+    <!-- <navigation /> -->
     <router-view/>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      show: false
-    }
-  },
-  created() {
-    this.$store.dispatch('getUser')
-    if (localStorage.getItem('token') === null) {
-      this.show = true
-    }
-  }
-}
-</script>
-
 <style lang="scss">
+@import '../../../recipeHTML/css/main.css';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

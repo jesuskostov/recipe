@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import CreateIdea from '../views/CreateIdea.vue'
 import MyIdeas from '../views/MyIdeas.vue'
 import UpdateIdea from '../views/UpdateIdea.vue'
+import Recipe from '../views/Recipe.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/update-idea/:id',
     name: 'UpdateIdea',
     component: UpdateIdea
+  },
+  {
+    path: '/recipe/:id',
+    name: 'Recipe',
+    component: Recipe
   }
 ]
 

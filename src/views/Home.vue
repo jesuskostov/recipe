@@ -1,57 +1,76 @@
 <template>
-  <div class="home">
-    Home
-    <br>
-    <br>
-    <br>
-    <div v-if="user" style="border: 1px solid black; display: inline-block; margin: 30px">
-      user: {{user._id}} <br>
-      user: {{user.name}} <br>
-      user: {{user.email}} <br>
-    </div>
-    <div v-if="user" style="border: 1px solid green; display: flex; flex-wrap: wrap;">
-      <div v-for="(idea, i) in ideas" :key="i" :class="{'active': idea.authorID === user._id}" style="width: 28%; background-color: gray; margin: 15px; padding: 10px; text-align: left; color: #fff">
-        <b>author id: </b>{{idea.authorID}}<br>
-        <b>author: </b>{{idea.author}}<br>
-        <b>idea title: </b>{{idea.title}}<br>
-        <b>idea description: </b>{{idea.description}}<br>
-        <b>idea creation date: </b>{{idea.date}}
+  <div>
+      <Nav />
+      <div class="container mt-5">
+         <div class="uk-section uk-section-default">
+            <div data-uk-grid>
+               <div class="uk-width-expand@m">
+                  <div data-uk-grid>
+                     <div class="uk-width-expand@m mb-4">
+                        <form class="uk-search uk-search-default uk-width-1-1">
+                           <span data-uk-search-icon></span>
+                           <input v-model="search" class="uk-search-input uk-text-small uk-border-rounded uk-form-large" type="search" placeholder="Search for recipes...">
+                        </form>
+                     </div>
+                  </div>
+                  <div class="row uk-child-width-1-2 uk-child-width-1-3@s" data-uk-grid>
+                     <div v-for="(recipe, i) in recipies" :key="i" class="col-md-3">
+                        <router-link :to="`/recipe/${recipe._id}`">
+                           <div class="img">
+                              <img :src="recipe.image" alt="">
+                           </div>
+                           <h2 class="title">{{recipe.title}}</h2>
+                           <p class="little-text d-flex justify-content-between"><span class="text-capitalize">By {{recipe.author}}</span> <span>Приготвяне: {{recipe.time}}мин </span></p>
+                        </router-link>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
-    <br>
-    <br>
-    <br>
-    <button @click="logout">Logout</button>
-  </div>
+      <button @click="$router.push('/create-idea')" class="add-new">Добави нова рецепта</button>
+   </div>
 </template>
 
 <script>
+import Nav from '../components/Navigation.vue'
 import axios from 'axios'
-// @ is an alias to /src
 
 export default {
   name: 'Home',
   data() {
     return {
       user: null,
+      search: ''
     }
   },
+  components: {
+     Nav
+  },
   methods: {
+    apply(id) {
+      let ideaID = id
+      let user = this.user
+      this.$store.dispatch('applyToIdea', {ideaID, user})
+    },
     logout() {
       localStorage.clear()
       this.$router.push('/register')
     }
   },
   computed: {
-    ideas() {
-      return this.$store.state.ideas
+    recipies() {
+      return this.$store.state.ideas.filter( recipe => {
+         return recipe.title.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
+
   },
   mounted() {
-    axios.get('http://localhost:5000/user', { headers: {token: localStorage.getItem('token')} }).then( res => {
+      axios.get('http://localhost:5000/user', { headers: {token: localStorage.getItem('token')} }).then( res => {
       this.user = res.data.user
-    });
-    this.$store.dispatch('getIdeas')    
+      });
+      this.$store.dispatch('getIdeas')    
   },
   created() {
     if (localStorage.getItem('token') === null) {
@@ -61,8 +80,56 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.add-new {
+   width: 300px;
+   height: 60px;
+   border: 0;
+   border-radius: 22px;
+   position: fixed;
+   right: 40px;
+   bottom: 40px;
+   background-color: #e6870b;
+   color: #fff;
+}
+
 .active {
   outline: 5px solid yellow
+}
+
+.img {
+   width: 100%;
+   height: 150px;
+   border-radius: 20px;
+   overflow: hidden;
+   img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+   }
+}
+
+.title {
+   margin-top: 5px;
+   text-align: left;
+   font-size: 14px;
+}
+
+.little-text {
+   font-size: 12px;
+   color: #747474;
+}
+
+.job-block {
+    .inner-box {
+        box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
+        position: relative;
+        padding: 32px 20px 22px 30px;
+        background: #FFFFFF;
+        border: 1px solid #ECEDF2;
+        box-sizing: border-box;
+        border-radius: 10px;
+        transition: all 300ms ease; 
+    }
 }
 </style>
