@@ -7,13 +7,11 @@
                         <label class="uk-form-label" for="image">Снимка</label>
                         <input id="image" class="uk-input uk-form-large uk-border-pill uk-text-center" type="file" placeholder="Вкусен боб">
                     </div> -->
-                    
                     <input type="file" class="image-input" ref="imageInput" accept="image/*" @change="onFileChange">
                     <div @click="pickImage" class="add-photo-container">
                         <img v-if="this.image != null" class="img" :src="this.image" alt="">
                     </div>
                     <!-- <img v-if="image != null" @click="deletePhoto" class="img-bin-icon ml-3" src="../assets/images/bin.svg" alt="bin icon"> -->
-
                     <div class="uk-width-1-1 uk-margin">
                         <label class="uk-form-label" for="title">Заглавие</label>
                         <input v-model="title" id="title" class="uk-input uk-form-large uk-border-pill uk-text-center" type="text" placeholder="Пример: Вкусен боб">
@@ -83,7 +81,7 @@ export default {
                 time: this.time,
                 date: new Date()
             }
-            await axios.post('http://localhost:5000/createIdea', idea)
+            await axios.post('http://localhost:1000/createIdea', idea)
             this.$store.dispatch('getIdeas')    
             this.$router.push('/')
         },

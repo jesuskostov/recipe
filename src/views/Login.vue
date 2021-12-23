@@ -69,7 +69,7 @@ export default {
         email: this.email,
         password: this.password
       }
-      axios.post('http://localhost:5000/signin', user).then( res => {
+      axios.post('http://localhost:1000/signin', user).then( res => {
         if (res.status === 200) {
           let token = res.data.token
           localStorage.setItem('token', token);

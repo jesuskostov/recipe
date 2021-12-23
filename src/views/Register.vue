@@ -72,7 +72,7 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            axios.post('http://localhost:5000/signup', user).then( res => {
+            axios.post('http://localhost:1000/signup', user).then( res => {
                 if (res.status === 200) {
                     this.$router.push('/login')
                 }

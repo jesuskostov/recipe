@@ -41,7 +41,7 @@ import axios from 'axios'
 export default {
     methods: {
         deleteIdea(id) {
-            axios.delete(`http://localhost:5000/ideas/${id}`)
+            axios.delete(`http://localhost:1000/ideas/${id}`)
             setTimeout(() => {
                 this.$store.dispatch('getMyIdeas')            
             }, 10)

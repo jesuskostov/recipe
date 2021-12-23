@@ -7,6 +7,7 @@ import CreateIdea from '../views/CreateIdea.vue'
 import MyIdeas from '../views/MyIdeas.vue'
 import UpdateIdea from '../views/UpdateIdea.vue'
 import Recipe from '../views/Recipe.vue'
+import Fridge from '../views/Fridge.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/recipe/:id',
     name: 'Recipe',
     component: Recipe
+  },
+  {
+    path: '/fridge',
+    name: 'Fridge',
+    component: Fridge
   }
 ]
 

@@ -32,7 +32,7 @@ export default {
                 description: this.description,
                 date: new Date()
             }
-            axios.put(`http://localhost:5000/ideas/${id}`, idea)
+            axios.put(`http://localhost:1000/ideas/${id}`, idea)
         }
     },
     async created() {

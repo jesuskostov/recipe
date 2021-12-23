@@ -67,7 +67,7 @@ export default {
 
   },
   mounted() {
-      axios.get('http://localhost:5000/user', { headers: {token: localStorage.getItem('token')} }).then( res => {
+      axios.get('http://localhost:1000/user', { headers: {token: localStorage.getItem('token')} }).then( res => {
       this.user = res.data.user
       });
       this.$store.dispatch('getIdeas')    

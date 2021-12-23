@@ -6,7 +6,7 @@
 </template>
 
 <style lang="scss">
-@import '../../../recipeHTML/css/main.css';
+// @import '../../../recipeHTML/css/main.css';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
