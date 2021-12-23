@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import recipeDB from "../../../recipe.json";
+import recipeDB from "../recipe.json";
 // import VueSlickCarousel from "vue-slick-carousel";
 // import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
